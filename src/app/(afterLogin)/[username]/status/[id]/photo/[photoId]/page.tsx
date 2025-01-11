@@ -9,3 +9,4 @@ export default function Page({ params }: Props) {
   params.photoId; // 1
   return <Home />;
 }
+ 
