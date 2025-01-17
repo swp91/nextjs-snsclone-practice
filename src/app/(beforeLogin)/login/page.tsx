@@ -1,16 +1,20 @@
-"use client";
-
-import { useRouter } from "next/navigation";
 import Main from "@/app/(beforeLogin)/_component/Main";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
+import RedirectToLogin from "@/app/(beforeLogin)/login/_component/RedirectToLogin";
 
-export default function Login() {
-  const router = useRouter();
-  router.replace("/i/flow/login");
-  return <Main />;
+export default async function Login() {
+  const session = await auth();
+
+  if (session?.user) {
+    redirect("/home");
+    return null;
+  }
+
+  return (
+    <>
+      <RedirectToLogin />
+      <Main />
+    </>
+  );
 }
-
-// router.push
-// localhost:3000/login -> localhost:3000/i/flow/login
-
-//router.replace (replace는 이전 히스토리를 없애버린다(대체한다))
-// localhost:3000/login -> localhost:3000/i/flow/login
